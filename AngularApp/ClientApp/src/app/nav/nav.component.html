@@ -1,3 +1,27 @@
-<mat-toolbar>
-  <span>My Application</span>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<mat-toolbar color="primary" class="nav" id="nav">
+  <a class="nav" href="">Friend Ship</a>
+  <a class="nav" href="">Matches</a>
+  <a class="nav" href="">Friend List</a>
+  <span class="fill-remaining-space"></span>
+  <form>
+    <input class="form1" type="text" placeholder="username" />
+    <input class="form1" type="text" placeholder="password" />
+    <input class="form1 submit" type="submit" value="Submit" />
+  </form>
+  <a href="javascipt:void(0);" class="icon" onclick="hamburger()">
+    <i class="fa fa-bars"></i>
+  </a>
 </mat-toolbar>
+
+<script>
+  function hamburger() {
+    var x = document.getElementById("nav");
+    if (x.className === "nav") {
+      x.className += " res";
+    } else {
+      x.className = "nav";
+    }
+  }
+</script>
