@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using AngularApp.Data;
 using AngularApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AngularApp.Controllers
 {
@@ -23,6 +27,7 @@ namespace AngularApp.Controllers
             _signInManager = signinManager;
         }
 
+
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserVM user)
         {
@@ -30,8 +35,8 @@ namespace AngularApp.Controllers
             {
                 var result = await _signInManager.PasswordSignInAsync(user.UserName, user.Password, false, false);
                 if (result.Succeeded)
-                {
-                    return Ok("Login succeeded");
+                { 
+                    return Ok(BuildToken(user));
                 }
                 else
                 {
@@ -40,6 +45,8 @@ namespace AngularApp.Controllers
             }
             return BadRequest(ModelState);
         }
+
+
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserVM user)
@@ -54,6 +61,24 @@ namespace AngularApp.Controllers
             }
             return BadRequest(result);
 
+        }
+
+        private string BuildToken(UserVM user)
+        {
+            var subject = new[]
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, user.UserName),
+                        new Claim(ClaimTypes.Name, user.UserName)
+                    };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Secret Testing Key"));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var token = new JwtSecurityToken(null, null, subject,
+              expires: DateTime.Now.AddMinutes(120),
+              signingCredentials: creds);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
     }
