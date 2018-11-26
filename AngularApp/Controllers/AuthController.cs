@@ -23,11 +23,24 @@ namespace AngularApp.Controllers
             _signInManager = signinManager;
         }
 
-        [HttpGet]
-        public string Get()
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(UserVM user)
         {
-            return "Test succeeded";
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(user.UserName, user.Password, false, false);
+                if (result.Succeeded)
+                {
+                    return Ok("Login succeeded");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                }
+            }
+            return BadRequest(ModelState);
         }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserVM user)
         {
