@@ -10,13 +10,6 @@
   font-size: 20px;
 }
 
-.form1 {
-  margin: 5px 10px 5px 10px;
-  padding: 3px 3px;
-  color: black;
-  font-size: 20px;
-}
-
 
 .nav a:hover {
   background-color: springgreen;
@@ -27,9 +20,6 @@
   display: none;
 }
 
-.submit:hover {
-  background-color: springgreen;
-}
 
 @media only screen and (max-width: 600px) {
   .nav a:not(:first-child), form {
