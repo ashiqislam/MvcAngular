@@ -41,6 +41,7 @@ namespace AngularApp
                 .AddEntityFrameworkStores<AngularAppContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddScoped<IUserRepository, IUserRepository>();
 
             var key = Encoding.ASCII.GetBytes("Secret Testing Key");
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -54,7 +55,6 @@ namespace AngularApp
                      ValidateAudience = false
                  };
              });
-
         }
 
 
