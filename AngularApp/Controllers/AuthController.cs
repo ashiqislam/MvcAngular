@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace AngularApp.Controllers
 {
@@ -79,6 +80,22 @@ namespace AngularApp.Controllers
               signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+
+        private async Task<IActionResult> SeedDb()
+        {
+            var userData = System.IO.File.ReadAllText("Data/UserData.json");
+            var users = JsonConvert.DeserializeObject<List<User>>(userData);
+
+            foreach (var userCount in users)
+            {
+                userCount.UserName = userCount.UserName.ToLower();
+                string pw = userCount.PasswordHash;
+                userCount.PasswordHash = null;
+                await _userManager.CreateAsync(userCount, pw);
+            }
+            return Ok("DB seeded");
         }
 
     }
