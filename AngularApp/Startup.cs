@@ -1,3 +1,4 @@
+using AngularApp.Data;
 using AngularApp.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -41,7 +42,7 @@ namespace AngularApp
                 .AddEntityFrameworkStores<AngularAppContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddScoped<IUserRepository, IUserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             var key = Encoding.ASCII.GetBytes("Secret Testing Key");
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -56,8 +57,6 @@ namespace AngularApp
                  };
              });
         }
-
-
 
 
 

@@ -9,6 +9,4 @@ public interface IUserRepository
     Task<bool> SaveAll();
     Task<IEnumerable<User>> GetUsers();
     Task<User> GetUser(int id);
-
-    Task<bool> Save();
 }

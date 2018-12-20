@@ -9,7 +9,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { LoginComponent } from './nav/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
-import { JwtModule } from '@auth0/angular-jwt';
+import {JwtModule } from '@auth0/angular-jwt';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
