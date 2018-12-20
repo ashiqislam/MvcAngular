@@ -37,7 +37,7 @@ namespace AngularApp.Controllers
                 var result = await _signInManager.PasswordSignInAsync(user.UserName, user.Password, false, false);
                 if (result.Succeeded)
                 { 
-                    return Ok("Login Succeeded!\n\n" + "Username: " + user.UserName + "\n" + "JSON Web Token: " + BuildToken(user));
+                    return Ok(BuildToken(user));
                 }
                 else
                 {
